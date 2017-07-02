@@ -7,11 +7,37 @@
 </head>
 <body>
 
+<div id="app">
+	<header>
+		<div class="shape_count" data-model="shapeCount">1</div>
+		<div class="shape_acreage" data-model="summaryShapedAcreage">2</div>
+	</header>
+
+	<div class="container"></div>
+
+	<footer>
+		<div class="shape_per_sec">
+			<div class="buttons"></div>
+			<div class="display" data-model="shapePerSecond"></div>
+		</div>
+
+		<div class="gravity">
+			<div class="buttons"></div>
+			<div class="display" data-model="gravity"></div>
+		</div>
+	</footer>
+</div>
+
 <script src="plugins/pixi.min.js"></script>
+
 <script src="services/Observer.js"></script>
+
 <script src="services/Model.js"></script>
 <script src="services/View.js"></script>
 <script src="services/Controller.js"></script>
+
+<script src="instances/Shape.js"></script>
+
 <script src="index.js"></script>
 </body>
 </html>
