@@ -1,10 +1,10 @@
-function Model(initData) {
+function Model() {
 	this.shapeArray = [];
 	this.shapeCount = 0;
 	this.summaryShapedAcreage = 0;
 
-	this.shapePerSecond = initData.shapePerSecond || 1;
-	this.gravity = initData.gravity || 10;
+	this.shapePerSecond = 1;
+	this.gravity = 5;
 
 	this.getShapeArray = function () {
 		return this.shapeArray
@@ -14,7 +14,7 @@ function Model(initData) {
 		return this.shapeCount
 	};
 
-	this.getsummaryShapedAcreage = function () {
+	this.getSummaryShapedAcreage = function () {
 		return this.summaryShapedAcreage
 	};
 
@@ -32,6 +32,16 @@ function Model(initData) {
 	this.changingShapePerSecond = new Observer();
 	this.changingGravity = new Observer();
 }
+
+Model.prototype.increaseCount = function () {
+	this.shapeCount++;
+	this.changingShowedShapesCount.notify();
+};
+
+Model.prototype.decreaseCount = function () {
+	this.shapeCount--;
+	this.changingShowedShapesCount.notify();
+};
 
 Model.prototype.increaseShapePerSecond = function () {
 	+this.shapePerSecond++;
@@ -53,14 +63,16 @@ Model.prototype.decreaseGravity = function () {
 	this.changingGravity.notify();
 };
 
-Model.prototype.addShape = function (shape) {
-	this.shapeArray.push(shape);
-	this.shapeCount = this.shapeArray.length;
-	this.changingShowedShapesCount.notify();
-};
+var SingleModel = (function () {
+	var model = null;
 
-Model.prototype.removeShape = function (index) {
-	this.shapeArray.splice(index, 1);
-	this.shapeCount = this.shapeArray.length;
-	this.changingShowedShapesCount.notify();
-};
+	return {
+		get: function () {
+			if (!model) {
+				model = new Model()
+			}
+
+			return model
+		}
+	}
+})();

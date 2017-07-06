@@ -9,21 +9,27 @@
 
 <div id="app">
 	<header>
-		<div class="shape_count" data-model="shapeCount">1</div>
-		<div class="shape_acreage" data-model="summaryShapedAcreage">2</div>
+		<div class="shape_count" data-model="getShapeCount"></div>
+		<div class="shape_acreage" data-model="getSummaryShapedAcreage"></div>
 	</header>
 
-	<div class="container"></div>
+	<canvas id="context"></canvas>
 
 	<footer>
 		<div class="shape_per_sec">
-			<div class="buttons"></div>
-			<div class="display" data-model="shapePerSecond"></div>
+			<div class="buttons">
+				<button data-click="decreaseShapePerSecond">-</button>
+				<button data-click="increaseShapePerSecond">+</button>
+			</div>
+			<div class="display" data-model="getShapePerSecond"></div>
 		</div>
 
 		<div class="gravity">
-			<div class="buttons"></div>
-			<div class="display" data-model="gravity"></div>
+			<div class="buttons">
+				<button data-click="decreaseGravity">-</button>
+				<button data-click="increaseGravity">+</button>
+			</div>
+			<div class="display" data-model="getGravity"></div>
 		</div>
 	</footer>
 </div>
@@ -36,6 +42,7 @@
 <script src="services/View.js"></script>
 <script src="services/Controller.js"></script>
 
+<script src="instances/Container.js"></script>
 <script src="instances/Shape.js"></script>
 
 <script src="index.js"></script>
