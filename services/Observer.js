@@ -1,4 +1,3 @@
-
 var Observer = function () {
 	this.observers = [];
 };
@@ -38,7 +37,7 @@ Observer.prototype.remove = function (observer) {
 
 /**
  * Triggering all observers in array
- * @param {object} data - that pass to call params
+ * @param {object|empty} data - that pass to call params
  */
 Observer.prototype.notify = function (data) {
 	var observersSnapshot = this.observers.slice(0);

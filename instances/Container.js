@@ -34,11 +34,12 @@ Container.prototype.getRandom = function () {
 
 Container.prototype.addShape = function (shape) {
 	this.container.addChild(shape);
+	this.model.addShapeArea(shape.area);
 	this.model.increaseCount();
 };
 
-Container.prototype.removeShape = function (shape) {
-	this.container.removeChild(shape);
+Container.prototype.removeShape = function (ticker, graphics) {
+	// todo move to here removing function
 };
 
 Container.prototype.getRandomShape = function () {

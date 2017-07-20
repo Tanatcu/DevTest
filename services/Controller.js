@@ -33,7 +33,7 @@ function Controller(view, model) {
 			clearInterval(interval);
 		}
 
-		if (shapePerSecond !== 0) {
+		if (shapePerSecond > 0) {
 			interval = container.interval(shapePerSecond)
 		}
 	}

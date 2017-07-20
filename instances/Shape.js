@@ -2,17 +2,21 @@ function Shape() {
 	this.startY = -100;
 	this.finishY = 700;
 
-	this.model = SingleModel.get();
+	var model = SingleModel.get();
 
 	this.loop = function (ticker, graphics) {
-		graphics.y += this.model.getGravity();
+		graphics.y += model.getGravity();
 
 		if (graphics.y > this.finishY) {
+
+			// Feels like this very bad code
+			// because this part of code must not be here
 			ticker.stop();
+			model.minusShapeArea(graphics.area);
 			graphics.destroy();
-			this.model.decreaseCount();
+			model.decreaseCount();
 		}
-	}
+	};
 }
 
 Shape.prototype.getRandomColor = function () {
@@ -26,16 +30,22 @@ Shape.prototype.getRandomX = function () {
 Shape.prototype.getTriangle = function () {
 	var graphics = new PIXI.Graphics(),
 			startX = this.getRandomX(),
-			ticker = new PIXI.ticker.Ticker();
+			ticker = new PIXI.ticker.Ticker(),
+			height = 50,
+			pathOfBottom = 50;
 
 	graphics.beginFill(this.getRandomColor());
 
 	graphics.moveTo(startX, this.startY);
-	graphics.lineTo(startX + 50, this.startY + 50);
-	graphics.lineTo(startX - 50, this.startY + 50);
+	graphics.lineTo(startX + pathOfBottom, this.startY + height);
+	graphics.lineTo(startX - pathOfBottom, this.startY + height);
 	graphics.lineTo(startX, this.startY);
 
 	graphics.endFill();
+
+	// 1/2 * a * h
+	graphics.area = pathOfBottom * 2 * height / 2;
+	graphics.name = 'triangle';
 
 	graphics.buttonMode = true;
 	graphics.interactive = true;
@@ -49,12 +59,18 @@ Shape.prototype.getTriangle = function () {
 Shape.prototype.getSquare = function () {
 	var graphics = new PIXI.Graphics(),
 			startX = this.getRandomX(),
-			ticker = new PIXI.ticker.Ticker();
+			ticker = new PIXI.ticker.Ticker(),
+			verticalWall = 50,
+			horizontalWall = 50;
 
 	graphics.lineStyle(4, this.getRandomColor(), 1);
 	graphics.beginFill(this.getRandomColor(), 1);
-	graphics.drawRect(startX, this.startY, 50, 50);
+	graphics.drawRect(startX, this.startY, verticalWall, horizontalWall);
 	graphics.endFill();
+
+	// h * w
+	graphics.area = verticalWall * horizontalWall;
+	graphics.name = 'square';
 
 	graphics.buttonMode = true;
 	graphics.interactive = true;
@@ -86,6 +102,10 @@ Shape.prototype.getPentagon = function () {
 
 	graphics.endFill();
 
+	// n·a2/4·tg(360/°2n)
+	graphics.area = (Math.pow(size, 2) * numberOfSides) / (Math.tan((360 / (2 * numberOfSides)) / 180 * Math.PI) * 4);
+	graphics.name = 'pentagon';
+
 	graphics.buttonMode = true;
 	graphics.interactive = true;
 
@@ -100,6 +120,7 @@ Shape.prototype.getHexagon = function () {
 			ticker = new PIXI.ticker.Ticker();
 
 	var side = 0,
+			sidesCount = 6,
 			size = 50,
 			x = this.getRandomX(),
 			y = this.startY;
@@ -114,6 +135,10 @@ Shape.prototype.getHexagon = function () {
 
 	graphics.endFill();
 
+	// n·a2/4·tg(360/°2n)
+	graphics.area = (Math.pow(size, 2) * sidesCount) / (Math.tan((360 / (2 * sidesCount)) / 180 * Math.PI) * 4);
+	graphics.name = 'hexagon';
+
 	graphics.buttonMode = true;
 	graphics.interactive = true;
 
@@ -125,11 +150,16 @@ Shape.prototype.getHexagon = function () {
 
 Shape.prototype.getCircle = function () {
 	var graphics = new PIXI.Graphics(),
-			ticker = new PIXI.ticker.Ticker();
+			ticker = new PIXI.ticker.Ticker(),
+			radius = 50; //can be improved to generating circles with different radius
 
 	graphics.beginFill(this.getRandomColor());
-	graphics.drawCircle(this.getRandomX(), this.startY, 50);
+	graphics.drawCircle(this.getRandomX(), this.startY, radius);
 	graphics.endFill();
+
+	// PI * R^2
+	graphics.area = Math.PI * Math.pow(radius, 2);
+	graphics.name = 'circle';
 
 	graphics.buttonMode = true;
 	graphics.interactive = true;
@@ -142,11 +172,16 @@ Shape.prototype.getCircle = function () {
 
 Shape.prototype.getEllipse = function () {
 	var graphics = new PIXI.Graphics(),
-			ticker = new PIXI.ticker.Ticker();
+			ticker = new PIXI.ticker.Ticker(),
+			widthHalf = 50,
+			heightHalf = 25;
 
 	graphics.beginFill(this.getRandomColor());
-	graphics.drawEllipse(this.getRandomX(), this.startY, 50, 25);
+	graphics.drawEllipse(this.getRandomX(), this.startY, widthHalf, heightHalf);
 	graphics.endFill();
+
+	graphics.area = Math.PI * widthHalf * heightHalf; // PI * 'half of width' * 'half of height'
+	graphics.name = 'ellipse';
 
 	graphics.buttonMode = true;
 	graphics.interactive = true;

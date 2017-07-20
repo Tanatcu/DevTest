@@ -1,8 +1,8 @@
 function View(model, root) {
 
-	var bindDataElements = root.querySelectorAll('[data-model]');
-	var buttons = root.querySelectorAll('[data-click]');
-	var canvas = root.querySelector('#context');
+	var bindDataElements = root.querySelectorAll('[data-model]'),
+			buttons = root.querySelectorAll('[data-click]'),
+			canvas = root.querySelector('#context');
 
 	bindData(bindDataElements[0]);
 	bindData(bindDataElements[1]);
@@ -29,7 +29,7 @@ function View(model, root) {
 		el.textContent = model[el.dataset.model]();
 	}
 
-	this.getModels = function () {
+	this.getBinds = function () {
 		return bindDataElements
 	};
 

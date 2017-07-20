@@ -43,6 +43,16 @@ Model.prototype.decreaseCount = function () {
 	this.changingShowedShapesCount.notify();
 };
 
+Model.prototype.addShapeArea = function (area) {
+	this.summaryShapedAcreage += Math.round(area);
+	this.changingSummaryAcreageOfShowedShapes.notify();
+};
+
+Model.prototype.minusShapeArea = function (area) {
+	this.summaryShapedAcreage -= Math.round(area);
+	this.changingSummaryAcreageOfShowedShapes.notify();
+};
+
 Model.prototype.increaseShapePerSecond = function () {
 	+this.shapePerSecond++;
 	this.changingShapePerSecond.notify();
